@@ -90,7 +90,7 @@ jobs:
 
       # === Collect Build Logs ===
       - name: Collect Build Logs
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: build-logs-${{ matrix.jvm_flag.name }}
           path: |
@@ -108,21 +108,10 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Download All Build Logs
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: build-logs-*
           path: ./build-logs
-
-      - name: Aggregate Coverage Metrics
-        run: |
-          echo "Coverage Metrics per JVM Flag:"
-          for file in ./build-logs/*/jacoco.csv; do
-            if [ -f "$file" ]; then
-              coverage=$(python3 config/coverage.py "$file")
-              flag=$(basename $(dirname "$file"))
-              echo "$flag: $coverage%"
-            fi
-          done
 
       ### ========== HUMOUR ==========
       - name: Add Humorous Comment
@@ -130,7 +119,7 @@ jobs:
           echo "Déboguer, c'est comme être le détective dans un film policier où vous êtes aussi le meurtrier." >> ./humour.txt
 
       - name: Upload Humorous Comment
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: Humour
           path: ./humour.txt
