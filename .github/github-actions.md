@@ -3,16 +3,16 @@
 1. **MaxRAM (`-XX:MaxRAM=2g`)**
     - **Description et Motivation :**
     Limite la taille maximale du heap à 2 Go. Cela assure que l'application reste dans les contraintes de mémoire, améliorant ainsi la stabilité en empêchant l'application de dépasser les limites de mémoire.
-    - Cela améliore la qualité car cela réduit le risque de crashs dus à une utilisation excessive de la mémoire.
+    - Cela améliore la qualité car cela réduit le risque de crashs dus à une utilisation excessive de la mémoire. En d'autres mots, on vérifier si le logiciel peut fonctionner sur des machines avec une mémoire RAM limitée, en tenant compte par exemple que le logiciel pourrait être utilisé dans une entreprise où les équipements sont souvent restreints en termes de capacité de traitement et de mémoire disponible.
 
 2. **GCLogging (`-Xlog:gc*:file=gc.log`)**
     - **Description et Motivation :**
-    Log et documente les informations détaillées de la gestion des garbage collections dans le fichier `gc.log`. Cela fournit des informations supplémentaires sur la gestion de la mémoire et aide à identifier les "bottleneck" des performances.
+    Log et documente les informations détaillées de la gestion des garbage collections dans le fichier `gc.log`. Cela fournit des informations supplémentaires sur la gestion de la mémoire et aide à identifier les "bottleneck" des performances. On veut vérifier si la quantité de mémoire allouée pour le tas du garbage collector est suffisante pour assurer la maintenance du système.
     - Cela améliore l'observabilité car les logs détaillés permettent une meilleure analyse des performances et facilitent le dépannage des problèmes liés à la gestion de la mémoire.
 
 3. **ReservedCodeCache (`-XX:ReservedCodeCacheSize=1024M`)**
     - **Description et Motivation :**
-    Augmente la taille du cache de code réservé à 1024 Mo. Cela améliore potentiellement les performances de l'application en réduisant la fréquence des garbage collections liées au cache de code, ce qui peut accélérer l'exécution.
+    Augmente la taille du cache de code réservé à 1024 Mo. Cela améliore potentiellement les performances de l'application en réduisant la fréquence des garbage collections liées au cache de code, ce qui peut accélérer l'exécution. L'idée de ce test est d'exécuter le logiciel avec une quantité limitée de cache de code en tenant compte du fait qu'il pourrait être, à terme, implémenté dans un système embarqué au sein d'une machine de contrôle numérique. Dans ce cas, nous devons nous assurer que le logiciel peut fonctionner avec une quantité limitée de cache de code.
     - Cela améliore la performance car moins de garbage collections sont nécessaires, ce qui permet une exécution plus fluide et rapide du code compilé.
 
 4. **UseG1GC (`-XX:+UseG1GC`)**
